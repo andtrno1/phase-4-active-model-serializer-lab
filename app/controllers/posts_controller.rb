@@ -7,14 +7,12 @@ class PostsController < ApplicationController
   end
 
   def show
-    post = Post.find(params[:id])
-    render json: post
-  end
-
-  private
-
-  def render_not_found_response
-    render json: { error: "Post not found" }, status: :not_found
+    post = Post.find_by(id: params[:id])
+    if post
+      render json: post
+    else 
+      render json: { errors: "Post not found" }
+    end
   end
 
 end
